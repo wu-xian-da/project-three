@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jianfei.pt.dao.relation.RoleMenuDao">
+	
+	<resultMap type="com.jianfei.pt.entity.relation.RoleMenu" id="roleMap">
+		<id property="id" column="id"/>
+		<result property="roleId" column="role_id"/>
+		<result property="menuId" column="menu_id"/>
+		<result property="buttonId" column="button_id"/>
+		<collection column="role_id" property="roles" ofType="string" select="findRolenameByRoleId"></collection>
+	</resultMap>
+	
+	<resultMap type="com.jianfei.pt.entity.relation.RoleMenu" id="buttonMap">
+		<id property="id" column="id"/>
+		<result property="roleId" column="role_id"/>
+		<result property="menuId" column="menu_id"/>
+		<result property="buttonId" column="button_id"/>
+		<collection column="button_id" property="buttons" ofType="string" select="findBUTTONBybuttonId"></collection>
+	</resultMap>
+	
+	<resultMap type="com.jianfei.pt.entity.relation.RoleMenu" id="menuMap">
+		<id property="id" column="id"/>
+		<result property="roleId" column="role_id"/>
+		<result property="menuId" column="menu_id"/>
+		<result property="buttonId" column="button_id"/>
+		<collection column="menu_id" property="menus" ofType="string" select="findMENUBymenuId"></collection>
+	</resultMap>
+	
+	<resultMap type="com.jianfei.pt.entity.relation.RoleMenu" id="titleMap">
+		<id property="id" column="id"/>
+		<result property="roleId" column="role_id"/>
+		<result property="titleId" column="title_id"/>
+		<result property="menuId" column="menu_id"/>
+		<result property="buttonId" column="button_id"/>
+		<collection column="title_id" property="titles" ofType="string" select="findTITLEBymenuId">
+			
+		</collection>
+	</resultMap>
+	
+	<delete id="delete">
+		delete from sys_role_menu where role_id = #{roleId}
+	</delete>
+	
+	<select id="findRoleByRoleId" resultType="com.jianfei.pt.entity.relation.RoleMenu">
+		select * from sys_role_menu m where m.role_id = #{roleId} 
+		order by m.id asc
+	</select>
+	
+	<!-- 用户jsp查询角色 -->
+	<select id="findRolesRoleId" resultType="com.jianfei.pt.entity.relation.RoleMenu" resultMap="roleMap">
+		select * from sys_role_menu order by id asc
+	</select>
+	
+	<!-- roleMap -->
+	<select id="findRolenameByRoleId" resultType="string">
+		select r.role_name from sys_roles r where r.id = #{role_id}
+	</select>
+	
+	<!-- 查询按钮 -->
+	<select id="findBUTTON" resultType="com.jianfei.pt.entity.relation.RoleMenu" resultMap="buttonMap">
+		select * from sys_role_menu where role_id = #{roleId} order by id asc
+	</select>
+	
+	<!-- menuMap -->
+	<select id="findBUTTONBybuttonId" resultType="string">
+		select m.permission from sys_menus m where m.id = #{button_id}
+	</select>
+	
+	<!-- 查询子级菜单 -->
+	<select id="findMENU" resultType="com.jianfei.pt.entity.relation.RoleMenu" resultMap="menuMap">
+		select * from sys_role_menu where role_id = #{roleId} order by id asc
+	</select>
+	
+	<!-- menuMap -->
+	<select id="findMENUBymenuId" resultType="string">
+		select m.permission from sys_menus m where m.id = #{menu_id}
+	</select>
+	
+	<!-- 查询父级菜单 -->
+	<select id="findTITLE" resultType="com.jianfei.pt.entity.relation.RoleMenu" resultMap="titleMap">
+		select * from sys_role_menu where role_id = #{roleId} order by id asc
+	</select>
+	
+	<!-- menuMap -->
+	<select id="findTITLEBymenuId" resultType="string">
+		select m.permission from sys_menus m where m.id = #{title_id}
+	</select>
+</mapper>
