@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.jianfei.pt.entity.common.Gender;
 import com.jianfei.pt.entity.system.Users;
+import com.jianfei.pt.page.PageController;
 import com.jianfei.pt.service.relation.RoleMenuService;
 import com.jianfei.pt.service.relation.UserRoleService;
 import com.jianfei.pt.service.system.MenusService;
@@ -44,6 +45,9 @@ public class UsersController{
 	@Autowired
 	private MenusService menusService;
 	
+	@Autowired
+	protected PageController<Users> pageController;
+	
 	private void setModel (Model model) {
 		//Gender枚举
 		model.addAttribute("gender",Gender.values());
@@ -51,8 +55,6 @@ public class UsersController{
 		model.addAttribute("roles",rolesService.findAll());
 		//查询角色与用户关联
 		model.addAttribute("userRole",userRoleSerivce.findAllRoleId());
-		//分页操作
-		model.addAttribute("page",new Users());
 	}
 	
 	@RequestMapping(value="/insert",method=RequestMethod.GET)
@@ -133,38 +135,19 @@ public class UsersController{
 	@RequestMapping
 	public String list(Model model,Users users ,HttpServletRequest request){
 		//页面传输的pn,ps
-		users.setPn(users.pn*users.ps);
-		users.setPs(users.ps);
+		pageController.setPNPS(model,users);
 		
 		//判断页面传参是否为null
 		if (users.getUsername() == null && users.getNickname() == null && users.getBeginCreateTime() == null && users.getEndCreateTime() == null ) {
-			//总记录条数
+			//查询总记录条数
 			int totalRecord = usersService.findCount();
-			model.addAttribute("totalRecord",totalRecord);
-			//分页的页数
-			int pageNo = (totalRecord % new Users().pageSize) == 0 ? totalRecord / new Users().pageSize : totalRecord / new Users().pageSize + 1 ;
-			model.addAttribute("pageNo",pageNo);
-			
-			//上一页的数值变化
-			model.addAttribute("bianPageShang",users.pn/users.ps-1);
-			//下一页的数值变化
-			model.addAttribute("bianPageXia",users.pn/users.ps+1);
-			
-			model.addAttribute("userurl","");
+			pageController.findPage(model, users,totalRecord);
 		} else {
-			//总记录条数
+			//条件查询总记录条数
 			int totalRecord = usersService.findCountByT(users);
-			model.addAttribute("totalRecord",totalRecord);
-			//分页的页数
-			int pageNo = (totalRecord % new Users().pageSize) == 0 ? totalRecord / new Users().pageSize : totalRecord / new Users().pageSize + 1 ;
-			model.addAttribute("pageNo",pageNo);
+			pageController.findPageCondition(model, users,totalRecord);
 			
-			//上一页的数值变化
-			model.addAttribute("bianPageShang",users.pn/users.ps-1);
-			//下一页的数值变化
-			model.addAttribute("bianPageXia",users.pn/users.ps+1);
-			
-			model.addAttribute("userurl","&username="+users.getUsername()+"&nickname="+users.getNickname()+
+			model.addAttribute("jspurl","&username="+users.getUsername()+"&nickname="+users.getNickname()+
 					"&beginCreateTime="+users.getBeginCreateTime()+"&endCreateTime="+users.getEndCreateTime());
 		}
 		//分页,条件,查询所有

@@ -93,7 +93,7 @@ String roleid = request.getParameter("roleId");//用request得到
 		<td width="35px;"><a href="${pageContext.request.contextPath}/system/roles?pn=0&ps=${page.pageSize}&roleId=<%=roleid%>">首页</a></td>
 		<!-- 上一页 -->
 		<td width="50px;">
-		<a id="shangyiye" href="${pageContext.request.contextPath}/system/roles?pn=${bianPageShang}${roleurl}&ps=${page.pageSize}&roleId=<%=roleid%>">上一页
+		<a id="shangyiye" href="${pageContext.request.contextPath}/system/roles?pn=${bianPageShang}${jspurl}&ps=${page.pageSize}&roleId=<%=roleid%>">上一页
 		<input id="pagePnShang" type="hidden" name="pn" value="${bianPageShang}"/>
 		</a>
 		</td>
@@ -108,7 +108,7 @@ String roleid = request.getParameter("roleId");//用request得到
 		</td>
 		<!-- 下一页 -->
 		<td width="50px;">
-		<a id="xiayiye" href="${pageContext.request.contextPath}/system/roles?pn=${bianPageXia}${roleurl}&ps=${page.pageSize}&roleId=<%=roleid%>">
+		<a id="xiayiye" href="${pageContext.request.contextPath}/system/roles?pn=${bianPageXia}${jspurl}&ps=${page.pageSize}&roleId=<%=roleid%>">
 		<input id="pagePnXia" type="hidden" name="pn" value="${bianPageXia}"/>
 		<input id="totalPage" type="hidden" name="pn" value="${pageNo}"/>下一页</a>
 		</td>

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.jianfei.pt.entity.common.MBType;
 import com.jianfei.pt.entity.system.Menus;
+import com.jianfei.pt.page.PageController;
 import com.jianfei.pt.service.relation.RoleMenuService;
 import com.jianfei.pt.service.system.MenusService;
 
@@ -29,11 +30,12 @@ public class MenusController {
 	@Autowired
 	private RoleMenuService roleMenuService;
 	
+	@Autowired
+	protected PageController<Menus> pageController;
+	
 	private void setModel(Model model){
 		//菜单枚举
 		model.addAttribute("type",MBType.values());
-		//分页操作
-		model.addAttribute("page",new Menus());
 		//角色与权限关联
 		model.addAttribute("rolename",this.roleMenuService.findRolesRoleId());
 	}
@@ -100,35 +102,19 @@ public class MenusController {
 	@RequestMapping
 	public String list(Model model,Menus menus,HttpServletRequest request){
 		//页面传输的pn,ps
-		menus.setPn(menus.pn*menus.ps);
-		menus.setPs(menus.ps);
+		pageController.setPNPS(model,menus);
 		
 		if (menus.getName() == null && menus.getPermission() == null) {
-			//总记录条数
+			//查询总记录条数
 			int totalRecord = menusService.findCount();
-			model.addAttribute("totalRecord",totalRecord);
-			//分页的页数
-			int pageNo = (totalRecord % new Menus().pageSize) == 0 ? totalRecord / new Menus().pageSize : totalRecord / new Menus().pageSize + 1 ;
-			model.addAttribute("pageNo",pageNo);
-			//上一页的数值变化
-			model.addAttribute("bianPageShang",menus.pn/menus.ps-1);
-			//下一页的数值变化
-			model.addAttribute("bianPageXia",menus.pn/menus.ps+1);
+			pageController.findPage(model, menus,totalRecord);
 			
-			model.addAttribute("menuurl","");
 		} else {
-			//总记录条数
+			//条件查询总记录条数
 			int totalRecord = menusService.findCountByT(menus);
-			model.addAttribute("totalRecord",totalRecord);
-			//分页的页数
-			int pageNo = (totalRecord % new Menus().pageSize) == 0 ? totalRecord / new Menus().pageSize : totalRecord / new Menus().pageSize + 1 ;
-			model.addAttribute("pageNo",pageNo);
-			//上一页的数值变化
-			model.addAttribute("bianPageShang",menus.pn/menus.ps-1);
-			//下一页的数值变化
-			model.addAttribute("bianPageXia",menus.pn/menus.ps+1);
+			pageController.findPageCondition(model, menus,totalRecord);
 			
-			model.addAttribute("menuurl","&name="+menus.getName()+"&permission="+menus.getPermission());
+			model.addAttribute("jspurl","&name="+menus.getName()+"&permission="+menus.getPermission());
 		}
 		//分页,条件查询,所有查询
 		model.addAttribute("menus",this.menusService.findCondition(menus));

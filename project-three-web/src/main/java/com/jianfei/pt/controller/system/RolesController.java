@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.jianfei.pt.entity.system.Roles;
-import com.jianfei.pt.entity.system.Users;
+import com.jianfei.pt.page.PageController;
 import com.jianfei.pt.service.relation.RoleMenuService;
 import com.jianfei.pt.service.relation.UserRoleService;
 import com.jianfei.pt.service.system.MenusService;
@@ -38,11 +38,12 @@ public class RolesController {
 	@Autowired
 	private RoleMenuService roleMenuService;
 	
+	@Autowired
+	protected PageController<Roles> pageController;
+	
 	private void setModel (Model model) {
 		//用户与角色关联
 		model.addAttribute("userRole",userRoleService.findAllUserId());
-		//分页操作
-		model.addAttribute("page",new Roles());
 		//根据类型父级菜单查询权限
 		model.addAttribute("title",menusService.findTitlesByType());
 		//根据类型子级菜单查询权限
@@ -142,38 +143,19 @@ public class RolesController {
 	@RequestMapping
 	public String list(Model model,Roles roles,HttpServletRequest request){
 		//页面传输的pn,ps
-		roles.setPn(roles.pn*roles.ps);
-		roles.setPs(roles.ps);
-		
+		pageController.setPNPS(model,roles);
 		
 		//判断页面传参是否为null
 		if (roles.getRolename() == null ) {
-			//总记录条数
+			//查询总记录条数
 			int totalRecord = rolesService.findCount();
-			model.addAttribute("totalRecord",totalRecord);
-			//分页的页数
-			int pageNo = (totalRecord % new Roles().pageSize) == 0 ? totalRecord / new Roles().pageSize : totalRecord / new Roles().pageSize + 1 ;
-			model.addAttribute("pageNo",pageNo);
-			//上一页的数值变化
-			model.addAttribute("bianPageShang",roles.pn/roles.ps-1);
-			//下一页的数值变化
-			model.addAttribute("bianPageXia",roles.pn/roles.ps+1);
-			
-			model.addAttribute("roleurl","");
+			pageController.findPage(model, roles,totalRecord);
 		} else {
-			//总记录条数
+			//条件查询总记录条数
 			int totalRecord = rolesService.findCountByT(roles);
-			model.addAttribute("totalRecord",totalRecord);
-			//分页的页数
-			int pageNo = (totalRecord % new Users().pageSize) == 0 ? totalRecord / new Users().pageSize : totalRecord / new Users().pageSize + 1 ;
-			model.addAttribute("pageNo",pageNo);
+			pageController.findPageCondition(model, roles,totalRecord);
 			
-			//上一页的数值变化
-			model.addAttribute("bianPageShang",roles.pn/roles.ps-1);
-			//下一页的数值变化
-			model.addAttribute("bianPageXia",roles.pn/roles.ps+1);
-			
-			model.addAttribute("roleurl","&rolename="+roles.getRolename());
+			model.addAttribute("jspurl","&rolename="+roles.getRolename());
 		}
 		//分页,条件查询,所有查询
 		model.addAttribute("roles",this.rolesService.findCondition(roles));

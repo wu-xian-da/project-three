@@ -7,6 +7,8 @@ package com.jianfei.pt.dao.base;
 
 import java.util.List;
 
+import com.jianfei.pt.entity.page.Page;
+
 public interface CrudDao<T> extends BaseDao {
 
 	public int insert(T entity);
@@ -30,5 +32,6 @@ public interface CrudDao<T> extends BaseDao {
 	 */
 	public List<T> findCondition(T entity);
 	
+	public Page<T> findPage(T entity);
 	
 }

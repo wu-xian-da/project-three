@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.jianfei.pt.dao.base.CrudDao;
 import com.jianfei.pt.entity.base.BaseEntity;
+import com.jianfei.pt.entity.page.Page;
 
 public abstract class CrudService<D extends CrudDao<T>,T extends BaseEntity> extends BaseService {
 
@@ -50,5 +51,17 @@ public abstract class CrudService<D extends CrudDao<T>,T extends BaseEntity> ext
 	
 	public List<T> findCondition(T entity){
 		return this.dao.findCondition(entity);
+	}
+	
+	/**
+	 * 查询分页数据
+	 * @param page 分页对象
+	 * @param entity
+	 * @return
+	 */
+	public Page<T> findPage(T entity) {
+	    Page<T> page = dao.findPage(entity);
+	    page.setEntity(entity);
+		return page;
 	}
 }
