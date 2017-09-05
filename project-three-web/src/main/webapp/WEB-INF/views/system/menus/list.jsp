@@ -61,17 +61,6 @@ String roleid = request.getParameter("roleId");//用request得到
 			<td>${m.permission}</td>
 			<td >${m.type.name}</td>
 			<td>${m.sort}</td>
-			<!-- <td align="left"  class="menuclass">
-				<c:forEach items="${rolename}" var="rn">
-					<c:if test="${rn.menuId eq m.id}">
-						<c:set value="${rn.roles}" var="rns"></c:set>
-					</c:if>
-					<c:if test="${rn.buttonId eq m.id}">
-						${rn.roles}
-					</c:if>
-				</c:forEach>
-				${rns}== 
-			</td>-->
 			<td>
 				<c:forEach items="${button_id}" var="b">
             	<c:if test="${b.roleTMB.permission == 'menus:update'}">
@@ -87,8 +76,7 @@ String roleid = request.getParameter("roleId");//用request得到
 				<input type="hidden" value="${m.name}"/>
 				<!-- hidden角色与权限的关联 -->
 				<c:forEach items="${rolename}" var="ruhidden">
-					<c:if test="${ruhidden.menuId eq m.id}"><input type="hidden" value="${ruhidden.roles}"/></c:if>
-					<c:if test="${ruhidden.buttonId eq m.id}"><input type="hidden" value="${ruhidden.roles}"/></c:if>
+					<c:if test="${ruhidden.menusId eq m.id}"><input type="hidden" value="${ruhidden.roles}"/></c:if>
 				</c:forEach>
 			</td>
 		</tr>
