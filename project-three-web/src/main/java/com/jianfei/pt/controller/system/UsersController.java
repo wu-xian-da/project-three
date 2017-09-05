@@ -20,7 +20,6 @@ import com.jianfei.pt.common.PageController;
 import com.jianfei.pt.common.TMBSelect;
 import com.jianfei.pt.entity.common.Gender;
 import com.jianfei.pt.entity.system.Users;
-import com.jianfei.pt.service.relation.RoleMenuService;
 import com.jianfei.pt.service.relation.UserRoleService;
 import com.jianfei.pt.service.system.MenusService;
 import com.jianfei.pt.service.system.RolesService;
@@ -39,9 +38,6 @@ public class UsersController{
 	
 	@Autowired
 	private UserRoleService userRoleSerivce;
-	
-	@Autowired
-	private RoleMenuService roleMenuService;
 	
 	@Autowired
 	private MenusService menusService;

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.jianfei.pt.common.PageController;
 import com.jianfei.pt.common.TMBSelect;
 import com.jianfei.pt.entity.system.LogAccess;
-import com.jianfei.pt.service.relation.RoleMenuService;
 import com.jianfei.pt.service.system.LogAccessService;
 
 @Controller
@@ -27,9 +26,6 @@ public class LogAccessController {
 	
 	@Autowired
 	private LogAccessService logAccessService;
-	
-	@Autowired
-	private RoleMenuService roleMenuService;
 	
 	@Autowired
 	private TMBSelect tmbSelect;
