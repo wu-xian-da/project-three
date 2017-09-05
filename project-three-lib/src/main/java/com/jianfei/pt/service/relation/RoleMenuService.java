@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.jianfei.pt.dao.relation.RoleMenuDao;
 import com.jianfei.pt.entity.relation.RoleMenu;
+import com.jianfei.pt.entity.system.Menus;
 import com.jianfei.pt.service.base.CrudService;
 
 @Service
@@ -28,15 +29,13 @@ public class RoleMenuService extends CrudService<RoleMenuDao, RoleMenu> {
 		return this.roleMenuDao.findRolesRoleId();
 	}
 	
-	public List<RoleMenu> findBUTTON(int roleId){
-		return this.roleMenuDao.findBUTTON(roleId);
+	/***
+	 * 查询角色与权限之间的关联
+	 * @param roleId
+	 * @return
+	 */
+	public List<Menus> findTMBMenusByRoles(int roleId){
+		return this.roleMenuDao.findTMBMenusByRoles(roleId);
 	}
-	
-	public List<RoleMenu> findMENU(int roleId){
-		return this.roleMenuDao.findMENU(roleId);
-	}
-	
-	public List<RoleMenu> findTITLE(int roleId){
-		return this.roleMenuDao.findTITLE(roleId);
-	}
+
 }

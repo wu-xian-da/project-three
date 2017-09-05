@@ -14,5 +14,21 @@ String name = request.getParameter("user");//用request得到
 </head>
 <body>
 	<h1>欢迎<%=name%>进入用户管理系统</h1>
+	
+	<c:forEach items="${tmbname}" var="tn">
+		<c:if test="${tn.roleTMB.type eq 'TITLE'}">
+		<c:set value="${tn.roleTMB.parenthref}" var="parent"></c:set>
+			${tn.roleTMB.name}--${parent}
+		
+		<c:forEach items="${tmbname}" var="mn">
+		<c:if test="${mn.roleTMB.type eq 'MENU'}">
+		<c:if test="${mn.roleTMB.parenthref eq parent}">
+			${mn.roleTMB.name}==${parent}
+		</c:if>
+		</c:if>
+		
+		</c:forEach>
+		</c:if>
+	</c:forEach>
 </body>
 </html>

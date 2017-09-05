@@ -26,19 +26,13 @@ public class TMBSelect {
 	@Autowired
 	private UsersService usersService;
 	
-	public void findtitles(HttpServletRequest request,UserRole userRole){
+	public void findtmbname(HttpServletRequest request,UserRole userRole){
 		
-		//查询父级菜单
-		request.getSession().setAttribute("roletitle", this.roleMenuService.findTITLE(userRole.getRoleId()));
-	}
-	
-	public void findmenus(HttpServletRequest request,UserRole userRole){
-		//查询子级菜单
-		request.getSession().setAttribute("rolemenus", this.roleMenuService.findMENU(userRole.getRoleId()));
+		request.getSession().setAttribute("tmbname", this.roleMenuService.findTMBMenusByRoles(userRole.getRoleId()));
 	}
 	
 	public void findbuttons(HttpServletRequest request,Model model){
 		//查询按钮
-		model.addAttribute("button_id",this.roleMenuService.findBUTTON(Integer.parseInt(request.getParameter("roleId"))));
+		model.addAttribute("button_id",this.roleMenuService.findTMBMenusByRoles(Integer.parseInt(request.getParameter("roleId"))));
 	}
 }

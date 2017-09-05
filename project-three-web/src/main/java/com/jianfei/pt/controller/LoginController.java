@@ -72,10 +72,10 @@ public class LoginController {
 				 *	
 				 */
 				request.getSession().setAttribute("usernickname", users.getNickname());
-				//查询子级菜单
-				tmbSelect.findmenus(request,userRole);
-				//查询父级菜单
-				tmbSelect.findtitles(request,userRole);
+				
+				//查询菜单
+				tmbSelect.findtmbname(request,userRole);
+				
 				//登录日志添加
 				logLoginInterceptor.loginSuccess(request, status);
 				System.out.println("登录成功");

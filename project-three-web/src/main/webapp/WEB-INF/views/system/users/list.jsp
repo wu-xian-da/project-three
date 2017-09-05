@@ -29,7 +29,7 @@ String roleid = request.getParameter("roleId");//用request得到
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr>
             <c:forEach items="${button_id}" var="b">
-            <c:if test="${b.buttons == '[users:select]'}">
+            <c:if test="${b.roleTMB.permission == 'users:select'}">
           	<td width="100px">条件检索</td>
             <td width="250px">姓名：<input type="text" name="username" style="width: 150px"/></td>
             <td width="250px">昵称：<input type="text" name="nickname" style="width: 150px"/></td>
@@ -48,7 +48,7 @@ String roleid = request.getParameter("roleId");//用request得到
             </c:if>
             </c:forEach>
            	<c:forEach items="${button_id}" var="b">
-          	<c:if test="${b.buttons == '[users:insert]'}">
+          	<c:if test="${b.roleTMB.permission == 'users:insert'}">
           	<td>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/system/users/insert?roleId=<%=roleid%>"><input  type="button" value="添加" style="width:50px"/></a></td>
           	</c:if>
           	</c:forEach>  
@@ -91,12 +91,12 @@ String roleid = request.getParameter("roleId");//用request得到
 			<td>${u.ip}</td>
 			<td>
 				<c:forEach items="${button_id}" var="b">
-            		<c:if test="${b.buttons == '[users:update]'}">
+            		<c:if test="${b.roleTMB.permission == 'users:update'}">
 					<a href="${pageContext.request.contextPath}/system/users/update/${u.id}?roleId=<%=roleid%>"><i></i>编辑</a>
 					</c:if>
 				</c:forEach>
 				<c:forEach items="${button_id}" var="b">
-            		<c:if test="${b.buttons == '[users:delete]'}">
+            		<c:if test="${b.roleTMB.permission == 'users:delete'}">
 					<a href="${pageContext.request.contextPath}/system/users/delete/${u.id}?roleId=<%=roleid%>" class="deleteuser"><i></i>删除</a>
 					</c:if>
 				</c:forEach>

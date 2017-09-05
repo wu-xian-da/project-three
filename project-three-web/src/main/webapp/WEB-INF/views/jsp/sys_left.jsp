@@ -27,84 +27,25 @@ String roleid = request.getParameter("roleid");//用request得到
 	
 	<div class="leftsidebar_box">
 		<div class="line"></div>
-		
-		<dl class="syetem_management">
-			<dt>
-			<c:forEach items="${roletitle}" var="t">
-			<c:if test="${t.titles == '[system]'}">
-			<c:set value="${t.titles}" var="tt"></c:set>
+		<c:forEach items="${tmbname}" var="tn">
+			<c:if test="${tn.roleTMB.type eq 'TITLE'}">
+			<dl>
+				<c:set value="${tn.roleTMB.parenthref}" var="parent"></c:set>
+				<dt>${tn.roleTMB.name}</dt>
+				<c:forEach items="${tmbname}" var="mn">
+					<c:if test="${mn.roleTMB.type eq 'MENU'}">
+					<c:if test="${mn.roleTMB.parenthref eq parent}">
+						<dd>
+						<a href="http://localhost:8080${mn.roleTMB.childshref}?roleId=<%=roleid%>" target="mainFrame">
+						${mn.roleTMB.name}</a>
+						</dd>
+					</c:if>
+					</c:if>
+				
+				</c:forEach>
+			</dl>
 			</c:if>
-			</c:forEach>
-			<c:if test="${tt == '[system]'}">
-			系统管理
-			</c:if>
-			</dt>
-			 
-			<dd>
-				<c:forEach items="${rolemenus}" var="m">
-				<c:if test="${m.menus == '[users:list]'}">
-				<c:set value="${m.menus}" var="ms"></c:set>
-				</c:if>
-				</c:forEach>
-				<c:if test="${ms == '[users:list]'}">
-				<a href="http://localhost:8080/system/users?roleId=<%=roleid%>" target="mainFrame">用户管理</a>
-				</c:if>
-			</dd>
-			<dd>
-				<c:forEach items="${rolemenus}" var="m">
-				<c:if test="${m.menus == '[roles:list]'}">
-				<c:set value="${m.menus}" var="ms"></c:set>
-				</c:if>
-				</c:forEach>
-				<c:if test="${ms == '[roles:list]'}">
-				<a href="http://localhost:8080/system/roles?roleId=<%=roleid%>" target="mainFrame">角色管理</a>
-				</c:if>
-			</dd>
-			<dd>
-				<c:forEach items="${rolemenus}" var="m">
-				<c:if test="${m.menus == '[menus:list]'}">
-				<c:set value="${m.menus}" var="ms"></c:set>
-				</c:if>
-				</c:forEach>
-				<c:if test="${ms == '[menus:list]'}">
-				<a href="http://localhost:8080/system/menus?roleId=<%=roleid%>" target="mainFrame">权限管理</a>
-				</c:if>
-			</dd>
-		</dl>
-		<dl>	
-			<dt>
-			<c:forEach items="${roletitle}" var="t">
-			<c:if test="${t.titles == '[login]'}">
-			<c:set value="${t.titles}" var="tt"></c:set>
-			</c:if>
-			</c:forEach>
-			<c:if test="${tt == '[login]'}">
-			系统日志
-			</c:if>
-			</dt>
-			<dd>
-				<c:forEach items="${rolemenus}" var="m">
-				<c:if test="${m.menus == '[login:logins]'}">
-				<c:set value="${m.menus}" var="ms"></c:set>
-				</c:if>
-				</c:forEach>
-				<c:if test="${ms == '[login:logins]'}">
-				<a href="http://localhost:8080/log/logins?roleId=<%=roleid%>" target="mainFrame">登录日志</a>
-				</c:if>
-			</dd>
-			<dd>
-				<c:forEach items="${rolemenus}" var="m">
-				<c:if test="${m.menus == '[login:access]'}">
-				<c:set value="${m.menus}" var="ms"></c:set>
-				</c:if>
-				</c:forEach>
-				<c:if test="${ms == '[login:access]'}">
-				<a href="http://localhost:8080/log/access?roleId=<%=roleid%>" target="mainFrame">访问日志</a>
-				</c:if>
-			</dd>
-			
-		</dl>
-		
+		</c:forEach>
 	</div>
 	
 </div>

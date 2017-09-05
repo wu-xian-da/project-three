@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.jianfei.pt.dao.base.CrudDao;
 import com.jianfei.pt.entity.relation.RoleMenu;
+import com.jianfei.pt.entity.system.Menus;
 
 public interface RoleMenuDao extends CrudDao<RoleMenu> {
 
@@ -21,9 +22,11 @@ public interface RoleMenuDao extends CrudDao<RoleMenu> {
 	
 	public List<RoleMenu> findRolesRoleId();
 	
-	public List<RoleMenu> findBUTTON(int roleId);
+	/***
+	 * 查询角色与权限之间的关联
+	 * @param roleId
+	 * @return
+	 */
+	public List<Menus> findTMBMenusByRoles(int roleId);
 	
-	public List<RoleMenu> findMENU(int roleId);
-	
-	public List<RoleMenu> findTITLE(int roleId);
 }

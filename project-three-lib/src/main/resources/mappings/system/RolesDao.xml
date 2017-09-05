@@ -8,7 +8,8 @@
 	
 	<!-- 添加角色与权限的关系 -->
 	<insert id="insertRoleMenu">
-		insert into sys_role_menu (role_id,title_id,menu_id,button_id) values (#{0},#{1},#{2},#{3})
+		<!-- insert into sys_role_menu (role_id,title_id,menu_id,button_id) values (#{0},#{1},#{2},#{3}) -->
+		insert into sys_role_menu (role_id,menus_id) values (#{0},#{1})
 	</insert>
 	
 	<update id="update">

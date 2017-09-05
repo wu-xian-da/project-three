@@ -78,12 +78,7 @@ public class RolesController {
 			//接收页面传参menubutton
 			for (String roleMenuId : roles.getMenubutton()) {
 				//添加角色与权限的关联 
-				this.rolesService.insertRoleMenu(roleid.getId(), 
-				Integer.parseInt(roleMenuId.substring(0, roleMenuId.indexOf("="))),
-				Integer.parseInt(roleMenuId.substring(roleMenuId.indexOf("=")+1, roleMenuId.indexOf("-"))),//特殊字符串指定中间取值
-				Integer.parseInt(roleMenuId.substring(roleMenuId.indexOf("-")+1)));//字符串指定取值,转换成int型
-					
-				//var str2=str1.substring(str1.indexOf("@")+1,str1.indexOf("."));
+				this.rolesService.insertRoleMenu(roleid.getId(),Integer.parseInt(roleMenuId));
 			}
 			
 			System.out.println("保存角色成功");
@@ -117,10 +112,7 @@ public class RolesController {
 		//修改角色与权限的关系,先删除后添加
 		this.roleMenuService.delete(id);
 		for (String rolemenuId : roles.getMenubutton()) {
-			this.rolesService.insertRoleMenu(id, 
-			Integer.parseInt(rolemenuId.substring(0, rolemenuId.indexOf("="))),
-			Integer.parseInt(rolemenuId.substring(rolemenuId.indexOf("=")+1, rolemenuId.indexOf("-"))),//特殊字符串指定中间取值
-			Integer.parseInt(rolemenuId.substring(rolemenuId.indexOf("-")+1)));//字符串指定取值,转换成int型
+			this.rolesService.insertRoleMenu(id,Integer.parseInt(rolemenuId));
 		}
 		
 		if (result > 0) {

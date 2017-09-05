@@ -42,7 +42,7 @@
 						<c:if test="${t.type == 'TITLE'}">
 						<c:set value="${t.parenthref}" var="thref"></c:set>
 							<tr><td>
-							<input type="checkbox" name="checktitle" value="${t.id}">${t.name}</td>
+							<input type="checkbox" name="menubutton" value="${t.id}">${t.name}</td>
 							</tr>
 						</c:if>
 						<!-- 二级 -->
@@ -52,7 +52,7 @@
 								<c:set value="${m.childshref}" var="mhref"></c:set>
 									<tr>
 									<td width="150px;">&nbsp;&nbsp;&nbsp;&nbsp;
-									<input data-p="${t.id}" type="checkbox" name="menubutton" value="${t.id}=${m.id}-0">${m.name}
+									<input data-p="${t.id}" type="checkbox" name="menubutton" value="${m.id}">${m.name}
 									</td>
 									</tr>
 								</c:if>
@@ -62,7 +62,7 @@
 									<c:if test="${b.type == 'BUTTON'}">
 										<c:if test="${mhref eq b.parenthref}">
 											<td width="150px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-												<input data-p="${t.id}" type="checkbox" name="menubutton" value="${t.id}=${m.id}-${b.id}">${b.name}
+												<input data-p="${t.id}" type="checkbox" name="menubutton" value="${b.id}">${b.name}
 											</td>
 										</c:if>
 									</c:if>
@@ -82,16 +82,16 @@
 							<tr><td>
 							<!-- 角色与权限关联 -->
 							<c:forEach items="${menubutton}" var="titleId">
-								<c:if test="${titleId.titleId eq t.id}">
+								<c:if test="${titleId.menusId eq t.id}">
 								<c:set value="1" var="bian"></c:set>
 								</c:if>
 							</c:forEach>
 							
 							<c:if test="${bian == '0'}">
-								<input type="checkbox" name="checkmenus" value="${t.id}">${t.name}
+								<input type="checkbox" name="menubutton" value="${t.id}">${t.name}
 							</c:if>
 							<c:if test="${bian == '1'}">
-								<input type="checkbox" name="checkmenus" value="${t.id}" checked="checked">${t.name}
+								<input type="checkbox" name="menubutton" value="${t.id}" checked="checked">${t.name}
 							</c:if>
 							
 							</td>
@@ -106,17 +106,17 @@
 							<c:set value="${m.childshref}" var="mbhref"></c:set>
 								<!-- 角色与权限关联 -->
 								<c:forEach items="${menubutton}" var="menuId">
-									<c:if test="${menuId.menuId eq m.id}">
+									<c:if test="${menuId.menusId eq m.id}">
 										<c:set value="3" var="bian"></c:set>
 									</c:if>
 								</c:forEach>
 								<tr>
 								<td width="150px;">&nbsp;&nbsp;&nbsp;&nbsp;
 								<c:if test="${bian == '2'}">
-									<input data-p="${t.id}" type="checkbox" name="menubutton" value="${t.id}=${m.id}-0">${m.name}
+									<input data-p="${t.id}" type="checkbox" name="menubutton" value="${m.id}">${m.name}
 								</c:if>
 								<c:if test="${bian == '3'}">
-									<input data-p="${t.id}" type="checkbox" name="menubutton" value="${t.id}=${m.id}-0" checked="checked">${m.name}
+									<input data-p="${t.id}" type="checkbox" name="menubutton" value="${m.id}" checked="checked">${m.name}
 								</c:if>
 								</td>
 								</tr>
@@ -130,16 +130,16 @@
 								<c:if test="${mbhref == b.parenthref}">
 									<!-- 角色与权限关联 -->
 									<c:forEach items="${menubutton}" var="buttonId">
-										<c:if test="${buttonId.buttonId eq b.id}">
+										<c:if test="${buttonId.menusId eq b.id}">
 											<c:set value="5" var="bian"></c:set>
 										</c:if>
 									</c:forEach>
 									<td width="150px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									<c:if test="${bian == '4'}">
-										<input data-p="${t.id}" type="checkbox" name="menubutton" value="${t.id}=${m.id}-${b.id}">${b.name}
+										<input data-p="${t.id}" type="checkbox" name="menubutton" value="${b.id}">${b.name}
 									</c:if>
 									<c:if test="${bian == '5'}">
-										<input data-p="${t.id}" type="checkbox" name="menubutton" value="${t.id}=${m.id}-${b.id}" checked="checked">${b.name}
+										<input data-p="${t.id}" type="checkbox" name="menubutton" value="${b.id}" checked="checked">${b.name}
 									</c:if>
 									</td>
 								</c:if>

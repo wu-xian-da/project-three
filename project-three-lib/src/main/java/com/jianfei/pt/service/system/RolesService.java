@@ -22,9 +22,11 @@ public class RolesService extends CrudService<RolesDao, Roles> {
 		return this.rolesDao.findRolesByRolename(rolename);
 	}
 	
-	public int insertRoleMenu(int id,int titleId,int menuId,int buttonId){
+	/*public int insertRoleMenu(int id,int titleId,int menuId,int buttonId){
 		return this.rolesDao.insertRoleMenu(id,titleId, menuId,buttonId);
+	}*/
+	
+	public int insertRoleMenu(int id,int menubutton){
+		return this.rolesDao.insertRoleMenu(id,menubutton);
 	}
-	
-	
 }

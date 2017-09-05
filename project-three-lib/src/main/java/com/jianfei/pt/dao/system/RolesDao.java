@@ -24,5 +24,7 @@ public interface RolesDao extends CrudDao<Roles>{
 	 * @param childId
 	 * @return
 	 */
-	public int insertRoleMenu(int id,int titleId,int menuId,int buttonId);
+	//public int insertRoleMenu(int id,int titleId,int menuId,int buttonId);
+	
+	public int insertRoleMenu(int id,int menubutton);
 }

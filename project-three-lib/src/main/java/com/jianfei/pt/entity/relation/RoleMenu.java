@@ -8,6 +8,7 @@ package com.jianfei.pt.entity.relation;
 import java.util.List;
 
 import com.jianfei.pt.entity.base.BaseEntity;
+import com.jianfei.pt.entity.system.Menus;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -23,17 +24,10 @@ public class RoleMenu extends BaseEntity{
 
 	private int roleId;
 	
-	private int titleId;
-	
-	private int menuId;
-	
-	private int buttonId;
+	private int menusId;
 	
 	private List<String> roles;
 	
-	private List<String> titles;
+	private Menus roleTMB;
 	
-	private List<String> menus;
-	
-	private List<String> buttons;
 }

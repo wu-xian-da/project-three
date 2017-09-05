@@ -25,7 +25,7 @@ String roleid = request.getParameter("roleId");//用request得到
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr>
            <c:forEach items="${button_id}" var="b">
-            <c:if test="${b.buttons == '[access:select]'}">
+            <c:if test="${b.roleTMB.permission == 'access:select'}">
           	<td width="100px">条件检索</td>
             <td width="350px">登录名：<input type="text" name="loginname" style="width: 150px"/></td>
             <td width="650px">IP：<input type="text" name="ip" style="width: 150px"/></td>
