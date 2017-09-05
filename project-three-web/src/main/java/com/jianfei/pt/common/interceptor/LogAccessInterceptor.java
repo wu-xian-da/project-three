@@ -3,7 +3,7 @@
   *@author changchun.wu
   *2017年8月29日上午9:38:45
   */
-package com.jianfei.pt.interceptor;
+package com.jianfei.pt.common.interceptor;
 
 import java.util.Date;
 

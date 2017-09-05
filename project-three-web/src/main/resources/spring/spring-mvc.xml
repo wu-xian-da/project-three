@@ -34,7 +34,7 @@
 		<mvc:interceptor>
 			<mvc:mapping path="/**"/>
 			<mvc:exclude-mapping path="/login"/>
-			<bean class="com.jianfei.pt.interceptor.LogAccessInterceptor"></bean>
+			<bean class="com.jianfei.pt.common.interceptor.LogAccessInterceptor"></bean>
 		</mvc:interceptor>
 	</mvc:interceptors>
   
