@@ -14,9 +14,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.jianfei.pt.common.PageController;
+import com.jianfei.pt.common.TMBSelect;
 import com.jianfei.pt.entity.common.MBType;
 import com.jianfei.pt.entity.system.Menus;
-import com.jianfei.pt.page.PageController;
 import com.jianfei.pt.service.relation.RoleMenuService;
 import com.jianfei.pt.service.system.MenusService;
 
@@ -32,6 +33,9 @@ public class MenusController {
 	
 	@Autowired
 	protected PageController<Menus> pageController;
+	
+	@Autowired
+	private TMBSelect tmbSelect;
 	
 	private void setModel(Model model){
 		//菜单枚举
@@ -122,7 +126,8 @@ public class MenusController {
 		
 		this.setModel(model);
 		//查询按钮
-		model.addAttribute("button_id",this.roleMenuService.findBUTTON(Integer.parseInt(request.getParameter("roleId"))));
+		tmbSelect.findbuttons(request, model);
+		
 		return "system/menus/list";
 	}
 }

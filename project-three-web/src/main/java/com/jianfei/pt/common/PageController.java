@@ -3,7 +3,7 @@
   *@author changchun.wu
   *2017年9月4日上午10:03:55
   */
-package com.jianfei.pt.page;
+package com.jianfei.pt.common;
 
 import org.springframework.ui.Model;
 

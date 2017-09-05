@@ -12,8 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.jianfei.pt.common.PageController;
+import com.jianfei.pt.common.TMBSelect;
 import com.jianfei.pt.entity.system.LogLogin;
-import com.jianfei.pt.page.PageController;
 import com.jianfei.pt.service.relation.RoleMenuService;
 import com.jianfei.pt.service.system.LogLoginService;
 
@@ -30,6 +31,8 @@ public class LogLoginController {
 	@Autowired
 	protected PageController<LogLogin> pageController;
 	
+	@Autowired
+	private TMBSelect tmbSelect;
 	
 	@RequestMapping
 	public String list(Model model,LogLogin logLogin,HttpServletRequest request){
@@ -51,7 +54,8 @@ public class LogLoginController {
 		model.addAttribute("logLogin",this.logLoginService.findCondition(logLogin));
 		
 		//查询按钮
-		model.addAttribute("button_id",this.roleMenuService.findBUTTON(Integer.parseInt(request.getParameter("roleId"))));
+		tmbSelect.findbuttons(request, model);
+		
 		return "log/logins";
 	}
 }

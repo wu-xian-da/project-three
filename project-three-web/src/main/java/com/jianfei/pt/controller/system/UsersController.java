@@ -16,9 +16,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.jianfei.pt.common.PageController;
+import com.jianfei.pt.common.TMBSelect;
 import com.jianfei.pt.entity.common.Gender;
 import com.jianfei.pt.entity.system.Users;
-import com.jianfei.pt.page.PageController;
 import com.jianfei.pt.service.relation.RoleMenuService;
 import com.jianfei.pt.service.relation.UserRoleService;
 import com.jianfei.pt.service.system.MenusService;
@@ -47,6 +48,9 @@ public class UsersController{
 	
 	@Autowired
 	protected PageController<Users> pageController;
+	
+	@Autowired
+	private TMBSelect tmbSelect;
 	
 	private void setModel (Model model) {
 		//Gender枚举
@@ -156,7 +160,8 @@ public class UsersController{
 		
 		this.setModel(model);
 		//查询按钮
-		model.addAttribute("button_id",this.roleMenuService.findBUTTON(Integer.parseInt(request.getParameter("roleId"))));
+		tmbSelect.findbuttons(request, model);
+		
 		return "system/users/list";
 	}
 }
