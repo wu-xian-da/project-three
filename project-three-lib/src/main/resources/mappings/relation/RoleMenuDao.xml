@@ -5,8 +5,7 @@
 	<resultMap type="com.jianfei.pt.entity.relation.RoleMenu" id="roleMap">
 		<id property="id" column="id"/>
 		<result property="roleId" column="role_id"/>
-		<result property="menuId" column="menu_id"/>
-		<result property="buttonId" column="button_id"/>
+		<result property="menusId" column="menus_id"/>
 		<collection column="role_id" property="roles" ofType="string" select="findRolenameByRoleId"></collection>
 	</resultMap>
 	

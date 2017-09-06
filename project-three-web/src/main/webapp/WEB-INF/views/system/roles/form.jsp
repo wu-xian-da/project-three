@@ -42,7 +42,7 @@
 						<c:if test="${t.type == 'TITLE'}">
 						<c:set value="${t.parenthref}" var="thref"></c:set>
 							<tr><td>
-							<input type="checkbox" name="menubutton" value="${t.id}">${t.name}</td>
+							<input data-d="${t.id}" type="checkbox" name="menubutton" value="${t.id}">${t.name}</td>
 							</tr>
 						</c:if>
 						<!-- 二级 -->
@@ -62,7 +62,7 @@
 									<c:if test="${b.type == 'BUTTON'}">
 										<c:if test="${mhref eq b.parenthref}">
 											<td width="150px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-												<input data-p="${t.id}" type="checkbox" name="menubutton" value="${b.id}">${b.name}
+												<input data-p="${t.id}" data-c="${m.id}" type="checkbox" name="menubutton" value="${b.id}">${b.name}
 											</td>
 										</c:if>
 									</c:if>
@@ -136,10 +136,10 @@
 									</c:forEach>
 									<td width="150px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									<c:if test="${bian == '4'}">
-										<input data-p="${t.id}" type="checkbox" name="menubutton" value="${b.id}">${b.name}
+										<input data-p="${t.id}" data-c="${m.id}" type="checkbox" name="menubutton" value="${b.id}">${b.name}
 									</c:if>
 									<c:if test="${bian == '5'}">
-										<input data-p="${t.id}" type="checkbox" name="menubutton" value="${b.id}" checked="checked">${b.name}
+										<input data-p="${t.id}" data-c="${m.id}" type="checkbox" name="menubutton" value="${b.id}" checked="checked">${b.name}
 									</c:if>
 									</td>
 								</c:if>
@@ -180,25 +180,52 @@ $(function(){
 	});
 	
 	$('input[type="checkbox"]').on('click',function(){
-		var _statusP = $(this).prop("checked");
+		var _statusT = $(this).prop("checked");
 		
-		//父节点
-		var parent_v = $(this).data("t");
-		if(parent_v != null && parent_v != '' && _statusP){
-			$('input[value='+parent_v+']').prop("checked", true);
+		//父级菜单节点
+		var parent_t = $(this).data("t");
+		if(parent_t != null && parent_t != '' && _statusP){
+			$('input[value='+parent_t+']').prop("checked", true);
 		}
 		
-		//子节点
+		//子级菜单及按钮节点
 		$('input[data-p='+$(this).val()+']').each(function(){
-			var _statusC = $(this).prop("checked");
-			if(_statusP){
-				if(!_statusC){
+			var _statusMB = $(this).prop("checked");
+			//alert(_statusMB)
+			if(_statusT){
+				if(!_statusMB){
 					$(this).click();
 				}
 			}
 			else{
-				if(_statusC){
+				if(_statusMB){
 					$(this).click();
+				}
+			}
+		});
+	
+		var _statusM = $(this).prop("checked");
+		
+		//子级菜单节点
+		var parent_m = $(this).data("m");
+		if(parent_m != null && parent_m != '' && _statusP){
+			$('input[value='+parent_m+']').prop("checked", true);
+		}
+		
+		//按钮节点
+		$('input[data-c='+$(this).val()+']').each(function(){
+			var _statusB = $(this).prop("checked");
+			//alert(_statusB)
+			if(_statusM){
+				if(!_statusB){
+					$(this).click();
+					$('input[data-d='+$(this).val()+']').prop("checked");
+				}
+			}
+			else{
+				if(_statusB){
+					$(this).click();
+					$('input[data-d='+$(this).val()+']').prop("checked");
 				}
 			}
 		});
