@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="p" uri="http://java.sun.com/jsp/jstl/power" %>
 <% 
 String path = request.getContextPath(); 
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/"; 
@@ -24,14 +25,12 @@ String roleid = request.getParameter("roleId");//用request得到
 	<form method="post" action="${pageContext.request.contextPath}/log/access?roleId=<%=roleid%>">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr>
-           <c:forEach items="${button_id}" var="b">
-            <c:if test="${b.roleTMB.permission == 'access:select'}">
+           <p:power target="access:select">
           	<td width="100px">条件检索</td>
             <td width="350px">登录名：<input type="text" name="loginname" style="width: 150px"/></td>
             <td width="650px">IP：<input type="text" name="ip" style="width: 150px"/></td>
             <td>&nbsp;&nbsp;<input  type="submit" name="submit" value="查询" style="width:50px"/></td>
-            </c:if>
-            </c:forEach>
+            </p:power>
           </tr>
         </table>
 	</form>

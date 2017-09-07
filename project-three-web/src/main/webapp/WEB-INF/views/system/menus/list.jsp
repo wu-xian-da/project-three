@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="p" uri="http://java.sun.com/jsp/jstl/power" %>
 <% 
 String path = request.getContextPath(); 
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/"; 
@@ -24,19 +25,15 @@ String roleid = request.getParameter("roleId");//用request得到
 	<form method="post" action="${pageContext.request.contextPath}/system/menus?roleId=<%=roleid%>">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr>
-          	<c:forEach items="${button_id}" var="b">
-            <c:if test="${b.roleTMB.permission == 'menus:select'}">
+          	<p:power target="menus:select">
           	<td width="100px">条件检索</td>
             <td width="250px">名称：<input type="text" name="name" style="width: 150px"/></td>
             <td width="650px">权限标识：<input type="text" name="permission" style="width: 150px"/></td>
             <td>&nbsp;&nbsp;<input  type="submit" name="submit" value="查询" style="width:50px"/></td>
-            </c:if>
-            </c:forEach>
-            <c:forEach items="${button_id}" var="b">
-            <c:if test="${b.roleTMB.permission == 'menus:insert'}">
+            </p:power>
+            <p:power target="menus:insert">
             <td>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/system/menus/insert?roleId=<%=roleid%>"><input  type="button" value="添加" style="width:50px"/></a></td>            
-            </c:if>
-            </c:forEach>
+            </p:power>
           </tr>
         </table>
 	</form>
@@ -62,16 +59,12 @@ String roleid = request.getParameter("roleId");//用request得到
 			<td >${m.type.name}</td>
 			<td>${m.sort}</td>
 			<td>
-				<c:forEach items="${button_id}" var="b">
-            	<c:if test="${b.roleTMB.permission == 'menus:update'}">
+				<p:power target="menus:update">
 				<a href="${pageContext.request.contextPath}/system/menus/update/${m.id}?roleId=<%=roleid%>"><i></i>编辑</a>
-				</c:if>
-				</c:forEach>
-				<c:forEach items="${button_id}" var="b">
-           	 	<c:if test="${b.roleTMB.permission == 'menus:delete'}">
+				</p:power>
+				<p:power target="menus:delete">
 				<a href="${pageContext.request.contextPath}/system/menus/delete/${m.id}?roleId=<%=roleid%>" class="deletemenu"><i></i>删除</a>
-				</c:if>
-				</c:forEach>
+				</p:power>
 				<!-- hidden -->
 				<input type="hidden" value="${m.name}"/>
 				<!-- hidden角色与权限的关联 -->

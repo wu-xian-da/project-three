@@ -29,5 +29,4 @@ public class RoleMenu extends BaseEntity{
 	private List<String> roles;
 	
 	private Menus roleTMB;
-	
 }
