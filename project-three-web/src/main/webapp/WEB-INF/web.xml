@@ -3,7 +3,7 @@
 	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	id="WebApp_ID" version="2.5">
-  <display-name>project-frist</display-name>
+  <display-name>project-three</display-name>
   
   <context-param>
   	<param-name>contextConfigLocation</param-name>
@@ -81,4 +81,13 @@
    		<url-pattern>/b_g</url-pattern>
   	</servlet-mapping>
   	
+  	
+  	<servlet>
+   		<servlet-name>gopage</servlet-name>
+  		<jsp-file>/WEB-INF/views/include/page.jsp</jsp-file>
+ 	</servlet>
+  	<servlet-mapping>
+   		<servlet-name>gopage</servlet-name>
+   		<url-pattern>/page</url-pattern>
+  	</servlet-mapping>
 </web-app>
