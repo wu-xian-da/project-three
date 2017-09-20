@@ -55,7 +55,6 @@ public class MembersController {
 	@RequestMapping
 	public String list(Model model,HttpServletRequest request){
 		List<Notes> notes = notesService.findNotesByMembersId(Integer.parseInt((String) request.getSession().getAttribute("membersId")));
-		//model.addAttribute("notes",notes);
 		request.getSession().setAttribute("notes", notes);
 		return "memfor/mem_main";
 	}

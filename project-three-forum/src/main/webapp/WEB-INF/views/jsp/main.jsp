@@ -12,6 +12,6 @@
   
  	<frameset rows="100,*">
 		<frame src="http://localhost:8888/top?modulesid=${param.modulesid}" name="topFrame" />
-		<frame src="http://localhost:8888/forumlist?modulesid=${param.modulesid}"  name="mainFramenotes"/>
+		<frame src="http://localhost:8888/forum/notes/forumlistByparentmodules/${param.modulesid}"  name="mainFramenotes"/>
 	</frameset>
 </html>

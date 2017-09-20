@@ -30,11 +30,50 @@ public class NotesService extends CrudService<NotesDao, Notes> {
 	 * @param id
 	 * @return
 	 */
-	public List<Notes> findAllMemberNotesByMembersId(int modulesId){
-		return this.dao.findAllMemberNotesByMembersId(modulesId);
+	public List<Notes> findAllMemberNotesByMembersId(int modulesId,int pn,int ps){
+		return this.dao.findAllMemberNotesByMembersId(modulesId,pn,ps);
 	}
 	
-	public List<Notes> findNotesByChildsModules(int childsmodules){
-		return this.dao.findNotesByChildsModules(childsmodules);
+	public int findCountBymembersId(int membersId){
+		return this.dao.findCountBymembersId(membersId);
 	}
+	
+	
+	public List<Notes> findNotesByChildsModules(int childsmodules,int pn,int ps){
+		return this.dao.findNotesByChildsModules(childsmodules,pn,ps);
+	}
+	
+	
+	/***
+	 * 根据状态查询论坛文章
+	 * @param notes
+	 * @return
+	 */
+	public List<Notes> findConditionByStatus(Notes notes){
+		return this.dao.findConditionByStatus(notes);
+	}
+	
+	/**
+	 * 根据状态查询论坛文章的数量
+	 * @param notes
+	 * @return
+	 */
+	public int findCountByStatus(){
+		return this.dao.findCountByStatus();
+	}
+	
+	public int findCountBychildsmodules(int childsmodules){
+		return this.dao.findCountBychildsmodules(childsmodules);
+	}
+
+	public int findCountByParentModules(int parentmodules) {
+		// TODO Auto-generated method stub
+		return this.dao.findCountByParentModules(parentmodules);
+	}
+
+	public List<Notes> findNotesByParentModules(int parentmodules, int pn, int ps) {
+		// TODO Auto-generated method stub
+		return this.dao.findNotesByParentModules(parentmodules,pn,ps);
+	}
+
 }

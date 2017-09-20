@@ -14,8 +14,30 @@ public interface NotesDao extends CrudDao<Notes> {
 
 	public List<Notes> findNotesByMembersId(int modulesId);
 	
-	public List<Notes> findAllMemberNotesByMembersId(int modulesId);
+	public List<Notes> findAllMemberNotesByMembersId(int modulesId, int pn, int ps);
 	
-	public List<Notes> findNotesByChildsModules(int childsmodules);
+	public List<Notes> findNotesByChildsModules(int childsmodules,int pn,int ps);
+
+	/***
+	 * 根据状态查询论坛文章
+	 * @param notes
+	 * @return
+	 */
+	public List<Notes> findConditionByStatus(Notes notes);
+	
+	/**
+	 * 根据状态查询论坛文章的数量
+	 * @param notes
+	 * @return
+	 */
+	public int findCountByStatus();
+	
+	public int findCountBychildsmodules(int childsmodules);
+
+	public int findCountBymembersId(int membersId);
+
+	public int findCountByParentModules(int parentmodules);
+
+	public List<Notes> findNotesByParentModules(int parentmodules, int pn,int ps);
 
 }

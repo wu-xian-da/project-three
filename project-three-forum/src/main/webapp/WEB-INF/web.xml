@@ -77,7 +77,7 @@
  	</servlet>
  	<servlet-mapping>
    		<servlet-name>gotoForum</servlet-name>
-   		<url-pattern>/forumlist</url-pattern>
+   		<url-pattern>/forum/notes/forumlistByparentmodules</url-pattern>
   	</servlet-mapping>
   	
   	<servlet>
@@ -106,7 +106,7 @@
  	</servlet>
  	<servlet-mapping>
    		<servlet-name>mem_forum</servlet-name>
-   		<url-pattern>/mem_forumlist</url-pattern>
+   		<url-pattern>/forum/notes/memForumlist</url-pattern>
   	</servlet-mapping>
   	
   	<!-- <servlet>

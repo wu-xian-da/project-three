@@ -13,6 +13,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.jianfei.pt.controller.common.PageController;
+import com.jianfei.pt.controller.common.TMBSelect;
+import com.jianfei.pt.entity.forum.Notes;
 import com.jianfei.pt.entity.member.Members;
 import com.jianfei.pt.service.forum.ModulesService;
 import com.jianfei.pt.service.forum.NotesService;
@@ -30,18 +33,36 @@ public class LogRegController {
 	
 	@Autowired
 	private ModulesService modulesService;
+	
+	@Autowired
+	protected PageController<Notes> pageController;
+	
+	@Autowired
+	private TMBSelect tmbSelect;
 
-	public void setModel(Model model){
-		//model.addAttribute("allnotes",notesService.findAll());
-		
-		//model.addAttribute("modules",modulesService.findAll());
-	}
+	/*public void setModel(Model model){
+		model.addAttribute("allmembers",membersService.findAll());
+		model.addAttribute("allmodules",modulesService.findAll());
+	}*/
 	
 	@RequestMapping
-	public String showPage(Model model,HttpServletRequest request){
-		this.setModel(model);
-		request.getSession().setAttribute("modules", modulesService.findAll());
-		request.getSession().setAttribute("allnotes", notesService.findAll());
+	public String showPage(Model model,HttpServletRequest request,Notes notes){
+		
+		//页面传输的pn,ps
+		pageController.setPNPS(model,notes);
+		
+		//查询总记录条数
+		int totalRecord = notesService.findCountByStatus();
+		pageController.findPage(model,notes,totalRecord);
+		
+		//分页,条件,查询所有
+		//model.addAttribute("users",this.notesService.findCondition(notes));
+		
+		request.getSession().setAttribute("allmembers", membersService.findAll());
+		request.getSession().setAttribute("allmodules", modulesService.findAll());
+		request.getSession().setAttribute("allnotes", this.notesService.findConditionByStatus(notes));
+		//
+		request.getSession().setAttribute("notesbymodulesname", notesService.findAll());
 		return "index";
 	}
 	

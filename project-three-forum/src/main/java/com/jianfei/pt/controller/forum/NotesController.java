@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.jianfei.pt.controller.common.PageController;
+import com.jianfei.pt.controller.common.TMBSelect;
 import com.jianfei.pt.entity.common.NoteStatus;
 import com.jianfei.pt.entity.forum.Modules;
 import com.jianfei.pt.entity.forum.Notes;
@@ -37,6 +39,12 @@ public class NotesController {
 	
 	@Autowired
 	private MembersService membersService;
+	
+	@Autowired
+	protected PageController<Notes> pageController;
+	
+	@Autowired
+	private TMBSelect tmbSelect;
 
 	public void setModel(Model model){
 		model.addAttribute("status",NoteStatus.values());
@@ -92,8 +100,14 @@ public class NotesController {
 	 * @return
 	 */
 	@RequestMapping(value="/{membersId}",method=RequestMethod.GET)
-	public String list(@PathVariable("membersId")int membersId,Model model){
-		model.addAttribute("membersallnotes",notesService.findAllMemberNotesByMembersId(membersId));
+	public String list(@PathVariable("membersId")int membersId,Model model,Notes notes){
+		//页面传输的pn,ps
+		pageController.setPNPS(model,notes);
+		
+		//查询总记录条数
+		int totalRecord = notesService.findCountBymembersId(membersId);
+		pageController.findPage(model,notes,totalRecord);
+		model.addAttribute("membersallnotes",notesService.findAllMemberNotesByMembersId(membersId,notes.getPn(),notes.getPs()));
 		this.setModel(model);
 		return "forum/notes/list";
 	}
@@ -105,10 +119,45 @@ public class NotesController {
 	 * @return
 	 */
 	@RequestMapping(value="/jsplist/{childsmodules}",method=RequestMethod.GET)
-	public String jsplist(@PathVariable("childsmodules")int childsmodules,Model model){
-		model.addAttribute("childsnotes",notesService.findNotesByChildsModules(childsmodules));
+	public String jsplist(@PathVariable("childsmodules")int childsmodules,Model model,Notes notes){
+		//页面传输的pn,ps
+		pageController.setPNPS(model,notes);
+		
+		//查询总记录条数
+		int totalRecord = notesService.findCountBychildsmodules(childsmodules);
+		pageController.findPage(model,notes,totalRecord);
+		
+		model.addAttribute("childsnotes",notesService.findNotesByChildsModules(childsmodules,notes.getPn(),notes.getPs()));
+		model.addAttribute("childsmodules",childsmodules);
 		this.setModel(model);
 		return "forum/notes/jsplist";
+	}
+	
+	@RequestMapping(value="memForumlist/{membersId}",method=RequestMethod.GET)
+	public String memForumlist(@PathVariable("membersId")int membersId,Model model,Notes notes){
+		//页面传输的pn,ps
+		pageController.setPNPS(model,notes);
+		
+		//查询总记录条数
+		int totalRecord = notesService.findCountBymembersId(membersId);
+		pageController.findPage(model,notes,totalRecord);
+		model.addAttribute("notesbymembersId",notesService.findAllMemberNotesByMembersId(membersId,notes.getPn(),notes.getPs()));
+		this.setModel(model);
+		return "memfor/mem_forumlist";
+	}
+	
+	@RequestMapping(value="/forumlistByparentmodules/{parentmodules}")
+	public String forumlistByparentmodules(@PathVariable("parentmodules")int parentmodules,Model model,Notes notes){
+		//页面传输的pn,ps
+		pageController.setPNPS(model,notes);
+		
+		//查询总记录条数
+		int totalRecord = notesService.findCountByParentModules(parentmodules);
+		pageController.findPage(model,notes,totalRecord);
+		model.addAttribute("parentmodules",parentmodules);
+		model.addAttribute("forumlistByparentmodules",notesService.findNotesByParentModules(parentmodules,notes.getPn(),notes.getPs()));
+		this.setModel(model);
+		return "jsp/forumlist";
 	}
 	
 	/***

@@ -12,6 +12,6 @@
   
  	<frameset rows="110,*">
 		<frame src="http://localhost:8888/mem_top" name="topFramemember" />
-		<frame src="http://localhost:8888/mem_forumlist"  name="mainFramemember"/>
+		<frame src="http://localhost:8888/forum/notes/memForumlist/${membersId}"  name="mainFramemember"/>
 	</frameset>
 </html>

@@ -23,7 +23,7 @@ String roleid = request.getParameter("modulesid");//用request得到
 	<table height="85px" width="100%">
 		<tr height="45px"></tr>
 		<tr height="30px">
-		<c:forEach items="${modules}" var="m">
+		<c:forEach items="${allmodules}" var="m">
 		<c:set value="" var="id"></c:set>
 		<c:if test="${m.parentId == param.modulesid}">
 		<td><a href="${pageContext.request.contextPath}/forum/notes/jsplist/${m.id}" target="mainFramenotes">${m.name}</a></td>

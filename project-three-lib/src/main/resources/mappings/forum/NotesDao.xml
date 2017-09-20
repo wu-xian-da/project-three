@@ -31,11 +31,31 @@
 	</select>
 	
 	<select id="findAllMemberNotesByMembersId" resultType="com.jianfei.pt.entity.forum.Notes">
-		SELECT * FROM for_notes n WHERE n.members_id = #{membersId} 
+		SELECT * FROM for_notes n WHERE 1=1 and n.members_id = #{0} limit #{1},#{2} 
+	</select>
+	
+	<select id="findCountBymembersId" resultType="int">
+		SELECT count(*) FROM for_notes n WHERE n.members_id = #{membersId}
 	</select>
 	
 	<select id="findNotesByChildsModules" resultType="com.jianfei.pt.entity.forum.Notes">
-		select * from for_notes where childs_modules = #{childsmodules} and status = 1
+		select * from for_notes where 1=1 and childs_modules = #{0} and status = 1 
+		limit #{1},#{2}
+	</select>
+	
+	
+	<select id="findCountByParentModules" resultType="int">
+		SELECT count(*) FROM for_notes n WHERE n.parent_modules = #{parentmodules} and status = 1
+	</select>
+	
+	<select id="findNotesByParentModules" resultType="com.jianfei.pt.entity.forum.Notes">
+		select * from for_notes where 1=1 and parent_modules = #{0} and status = 1 
+		limit #{1},#{2}
+	</select>
+	
+	<!-- 查询数据条数 -->
+	<select id="findCountBychildsmodules" resultType="int">
+		select count(*) from for_notes where childs_modules = #{childsmodules} and status = 1
 	</select>
 	
 	<select id="findCondition" resultType="com.jianfei.pt.entity.forum.Notes">
@@ -49,5 +69,22 @@
         <if test="null != endCreateTime and endCreateTime != ''">and DATE_FORMAT(a.releasetime, '%Y-%m-%d')  <![CDATA[<=]]> #{endCreateTime}</if>
     	order by a.id asc
     	limit #{pn},#{ps}
+	</select>
+	
+	<select id="findConditionByStatus" resultType="com.jianfei.pt.entity.forum.Notes">
+		select * from for_notes a
+	    where 1=1 and status = 1
+    	order by a.id asc
+    	limit #{pn},#{ps}
+	</select>
+	
+	<!-- 查询数据条数 -->
+	<select id="findCountByStatus" resultType="int">
+		select count(*) from for_notes where status = 1
+	</select>
+	
+	<!-- 查询数据条数 -->
+	<select id="findCount" resultType="int">
+		select count(*) from for_notes
 	</select>
 </mapper>
