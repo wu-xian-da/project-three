@@ -23,6 +23,7 @@ import com.jianfei.pt.entity.forum.Modules;
 import com.jianfei.pt.entity.forum.Notes;
 import com.jianfei.pt.service.forum.ModulesService;
 import com.jianfei.pt.service.forum.NotesService;
+import com.jianfei.pt.service.member.MembersService;
 
 @Controller
 @RequestMapping("/forum/notes")
@@ -33,10 +34,15 @@ public class NotesController {
 	
 	@Autowired
 	private ModulesService modulesService;
+	
+	@Autowired
+	private MembersService membersService;
 
 	public void setModel(Model model){
 		model.addAttribute("status",NoteStatus.values());
 		model.addAttribute("modulesall",modulesService.findAll());
+		model.addAttribute("allmembers",membersService.findAll());
+		model.addAttribute("allmodules",modulesService.findAll());
 	}
 	
 	@RequestMapping(value="/insert",method=RequestMethod.GET)
@@ -75,7 +81,8 @@ public class NotesController {
 	@RequestMapping(value="/selectnotes/{id}" ,method=RequestMethod.GET)
 	public String selectnotes(@PathVariable("id")int id,Model model){
 		model.addAttribute("notescontent",notesService.findById(id));
-		return "browse";
+		this.setModel(model);
+		return "forum/notes/browse";
 	}
 	
 	/***
