@@ -53,18 +53,36 @@ public class NotesController {
 		model.addAttribute("allmodules",modulesService.findAll());
 	}
 	
+	/**
+	 * 跳转新增页面
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value="/insert",method=RequestMethod.GET)
 	public String Forminsert(Model model){
 		this.setModel(model);
 		return "forum/notes/form";
 	}
 	
+	/***
+	 * 新增页面提交表单
+	 * @param model
+	 * @param notes
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value="/insert",method=RequestMethod.POST)
 	public String insert(Model model,Notes notes,HttpServletRequest request){
 		notesService.insert(notes);
 		return "redirect:/forum/notes/"+request.getSession().getAttribute("membersId");
 	}
 	
+	/**
+	 * 跳转编辑页面
+	 * @param id
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value="/update/{id}",method=RequestMethod.GET)
 	public String Formupdate(@PathVariable("id")int id,Model model){
 		model.addAttribute("forumnotes",notesService.findById(id));
@@ -72,11 +90,31 @@ public class NotesController {
 		return "forum/notes/form";
 	}
 	
+	/***
+	 * 编辑页面提交表单
+	 * @param model
+	 * @param notes
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value="/update/{id}",method=RequestMethod.POST)
 	public String update(Model model,Notes notes,HttpServletRequest request){
 		notes.setStatus(NoteStatus.WFB);
 		notes.setReleasetime(null);
 		notesService.update(notes);
+		return "redirect:/forum/notes/"+request.getSession().getAttribute("membersId");
+	}
+	
+	/***
+	 * 删除功能
+	 * @param model
+	 * @param id
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="/delete/{id}",method=RequestMethod.GET)
+	public String delete(Model model,@PathVariable("id")int id,HttpServletRequest request){
+		notesService.delete(id);
 		return "redirect:/forum/notes/"+request.getSession().getAttribute("membersId");
 	}
 	
@@ -113,7 +151,7 @@ public class NotesController {
 	}
 	
 	/***
-	 * 根据会员ID查询发帖内容
+	 * 根据子模块ID及状态YFB查询发帖内容
 	 * @param membersId
 	 * @param model
 	 * @return
@@ -133,19 +171,33 @@ public class NotesController {
 		return "forum/notes/jsplist";
 	}
 	
+	/***
+	 * 查询notes根据用户的ID及状态YFB
+	 * @param membersId
+	 * @param model
+	 * @param notes
+	 * @return
+	 */
 	@RequestMapping(value="memForumlist/{membersId}",method=RequestMethod.GET)
 	public String memForumlist(@PathVariable("membersId")int membersId,Model model,Notes notes){
 		//页面传输的pn,ps
 		pageController.setPNPS(model,notes);
 		
 		//查询总记录条数
-		int totalRecord = notesService.findCountBymembersId(membersId);
+		int totalRecord = notesService.findCountStatusYFBBymembersId(membersId);
 		pageController.findPage(model,notes,totalRecord);
-		model.addAttribute("notesbymembersId",notesService.findAllMemberNotesByMembersId(membersId,notes.getPn(),notes.getPs()));
+		model.addAttribute("notesbymembersId",notesService.findNotesStatusYFBByMembersId(membersId,notes.getPn(),notes.getPs()));
 		this.setModel(model);
-		return "memfor/mem_forumlist";
+		return "member/memfor/mem_forumlist";
 	}
 	
+	/***
+	 * 根据父模块ID及状态YFB查询notes
+	 * @param parentmodules
+	 * @param model
+	 * @param notes
+	 * @return
+	 */
 	@RequestMapping(value="/forumlistByparentmodules/{parentmodules}")
 	public String forumlistByparentmodules(@PathVariable("parentmodules")int parentmodules,Model model,Notes notes){
 		//页面传输的pn,ps

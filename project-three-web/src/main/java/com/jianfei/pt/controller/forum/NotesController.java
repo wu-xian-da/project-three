@@ -6,6 +6,7 @@
 package com.jianfei.pt.controller.forum;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +18,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.jianfei.pt.common.PageController;
+import com.jianfei.pt.common.TMBSelect;
+import com.jianfei.pt.entity.common.NoteStatus;
 import com.jianfei.pt.entity.forum.Modules;
 import com.jianfei.pt.entity.forum.Notes;
 import com.jianfei.pt.service.forum.ModulesService;
@@ -36,13 +40,60 @@ public class NotesController {
 	@Autowired
 	private ModulesService modulesService;
 	
+	@Autowired
+	protected PageController<Notes> pageController;
+	
+	@Autowired
+	private TMBSelect tmbSelect;
+	
 	public void setModel(Model model){
 		model.addAttribute("allmembers",membersService.findAll());
 		model.addAttribute("allmodules",modulesService.findAll());
 	}
+	
+	/**
+	 * 上刊
+	 * @return
+	 */
+	@RequestMapping(value="/changestatusYFB/{id}",method=RequestMethod.GET)
+	public String changestatusYFB(@PathVariable("id")int id){
+		Notes note = notesService.findById(id);
+		note.setStatus(NoteStatus.YFB);
+		note.setReleasetime(new Date());
+		notesService.update(note);
+		return "redirect:/forum/notes";
+	}
+	
+	/***
+	 * 下刊
+	 * @return
+	 */
+	@RequestMapping(value="/changestatusWFB/{id}",method=RequestMethod.GET)
+	public String changestatusWFB(@PathVariable("id")int id){
+		Notes note = notesService.findById(id);
+		note.setStatus(NoteStatus.WFB);
+		note.setReleasetime(null);
+		notesService.update(note);
+		return "redirect:/forum/notes";
+	}
 
 	@RequestMapping
 	public String list(Notes notes,Model model){
+		pageController.setPNPS(model, notes);
+		
+		if (notes.getTheme() == null && notes.getParentmodules() == 0 && notes.getChildsmodules() == 0 && notes.getMembersId() == 0 && notes.getBeginCreateTime() == null && notes.getEndCreateTime() == null) {
+			//查询总记录条数
+			int totalRecord = notesService.findCount();
+			pageController.findPage(model, notes,totalRecord);
+		}else{
+			//条件查询总记录条数
+			int totalRecord = notesService.findCountByT(notes);
+			pageController.findPageCondition(model, notes,totalRecord);
+			
+			model.addAttribute("jspurl","&theme="+notes.getTheme()+"&parentmodules="+notes.getParentmodules()+"&childsmodules="+
+			notes.getChildsmodules()+"&membersId="+notes.getMembersId()+"&beginCreateTime="+notes.getBeginCreateTime()+"&endCreateTime="+notes.getEndCreateTime());
+		}
+		
 		model.addAttribute("allnotes",notesService.findCondition(notes));
 		this.setModel(model);
 		return "forum/notes/list";

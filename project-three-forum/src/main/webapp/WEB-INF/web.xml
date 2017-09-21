@@ -93,7 +93,7 @@
   	<!-- member导航静态资源访问 -->
     <servlet>
    		<servlet-name>mem_top</servlet-name>
-  		<jsp-file>/WEB-INF/views/memfor/mem_top.jsp</jsp-file>
+  		<jsp-file>/WEB-INF/views/member/memfor/mem_top.jsp</jsp-file>
  	</servlet>
  	<servlet-mapping>
    		<servlet-name>mem_top</servlet-name>
@@ -102,20 +102,11 @@
   	
   	<servlet>
    		<servlet-name>mem_forum</servlet-name>
-  		<jsp-file>/WEB-INF/views/memfor/mem_forumlist.jsp</jsp-file>
+  		<jsp-file>/WEB-INF/views/member/memfor/mem_forumlist.jsp</jsp-file>
  	</servlet>
  	<servlet-mapping>
    		<servlet-name>mem_forum</servlet-name>
    		<url-pattern>/forum/notes/memForumlist</url-pattern>
   	</servlet-mapping>
-  	
-  	<!-- <servlet>
-   		<servlet-name>mem_main</servlet-name>
-  		<jsp-file>/WEB-INF/views/member/members/mem_main.jsp</jsp-file>
- 	</servlet>
- 	<servlet-mapping>
-   		<servlet-name>mem_main</servlet-name>
-   		<url-pattern>/mem_main</url-pattern>
-  	</servlet-mapping> -->
   
 </web-app>

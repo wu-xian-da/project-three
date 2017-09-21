@@ -76,4 +76,14 @@ public class NotesService extends CrudService<NotesDao, Notes> {
 		return this.dao.findNotesByParentModules(parentmodules,pn,ps);
 	}
 
+	public List<Notes> findNotesStatusYFBByMembersId(int membersId, int pn, int ps) {
+		// TODO Auto-generated method stub
+		return this.dao.findNotesStatusYFBByMembersId(membersId,pn,ps);
+	}
+
+	public int findCountStatusYFBBymembersId(int membersId) {
+		// TODO Auto-generated method stub
+		return this.dao.findCountStatusYFBBymembersId(membersId);
+	}
+
 }

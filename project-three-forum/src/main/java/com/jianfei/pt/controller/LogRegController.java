@@ -39,12 +39,14 @@ public class LogRegController {
 	
 	@Autowired
 	private TMBSelect tmbSelect;
-
-	/*public void setModel(Model model){
-		model.addAttribute("allmembers",membersService.findAll());
-		model.addAttribute("allmodules",modulesService.findAll());
-	}*/
 	
+	/***
+	 * 首页
+	 * @param model
+	 * @param request
+	 * @param notes
+	 * @return
+	 */
 	@RequestMapping
 	public String showPage(Model model,HttpServletRequest request,Notes notes){
 		
@@ -56,34 +58,59 @@ public class LogRegController {
 		pageController.findPage(model,notes,totalRecord);
 		
 		//分页,条件,查询所有
-		//model.addAttribute("users",this.notesService.findCondition(notes));
+		request.getSession().setAttribute("allnotes", this.notesService.findConditionByStatus(notes));
 		
 		request.getSession().setAttribute("allmembers", membersService.findAll());
 		request.getSession().setAttribute("allmodules", modulesService.findAll());
-		request.getSession().setAttribute("allnotes", this.notesService.findConditionByStatus(notes));
+		
 		//
 		request.getSession().setAttribute("notesbymodulesname", notesService.findAll());
 		return "index";
 	}
 	
+	/***
+	 * 跳转登录页面
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/log")
 	public String LogPage(Model model){
 		model.addAttribute("logreg","login");
 		return "logreg";
 	}
 	
+	/***
+	 * 跳转注册页面
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/reg")
 	public String RegPage(Model model){
 		model.addAttribute("logreg","register");
 		return "logreg";
 	}
 	
+	/***
+	 * 注册用户
+	 * @param model
+	 * @param account
+	 * @param password
+	 * @return
+	 */
 	@RequestMapping(value="/Reg",method=RequestMethod.POST)
 	public String Reg(Model model,String account,String password){
 		membersService.insertMembers(account, password);
 		return "redirect:/log";
 	}
 	
+	/***
+	 * 用户登录
+	 * @param model
+	 * @param request
+	 * @param account
+	 * @param password
+	 * @return
+	 */
 	@RequestMapping(value="/Log",method=RequestMethod.POST)
 	public String Log(Model model,HttpServletRequest request,String account,String password){
 		Members members = membersService.findMembersByAccount(account, password);

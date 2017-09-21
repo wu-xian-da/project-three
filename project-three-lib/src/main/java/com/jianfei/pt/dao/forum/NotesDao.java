@@ -40,4 +40,8 @@ public interface NotesDao extends CrudDao<Notes> {
 
 	public List<Notes> findNotesByParentModules(int parentmodules, int pn,int ps);
 
+	public List<Notes> findNotesStatusYFBByMembersId(int membersId, int pn, int ps);
+
+	public int findCountStatusYFBBymembersId(int membersId);
+
 }

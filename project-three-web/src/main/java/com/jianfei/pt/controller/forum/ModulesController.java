@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.jianfei.pt.common.PageController;
+import com.jianfei.pt.common.TMBSelect;
 import com.jianfei.pt.entity.forum.Modules;
 import com.jianfei.pt.service.forum.ModulesService;
 
@@ -26,6 +28,12 @@ public class ModulesController {
 	
 	@Autowired
 	private ModulesService modulesService;
+	
+	@Autowired
+	protected PageController<Modules> pageController;
+	
+	@Autowired
+	private TMBSelect tmbSelect;
 	
 	public void setModel(Model model){
 		model.addAttribute("modulesalllist",modulesService.findAll());
@@ -62,8 +70,27 @@ public class ModulesController {
 		return "redirect:/forum/modules";
 	}
 	
+	@RequestMapping(value="/delete/{id}",method=RequestMethod.GET)
+	public String delete(Model model,@PathVariable("id")int id){
+		modulesService.delete(id);
+		return "redirect:/forum/modules";
+	}
+	
 	@RequestMapping
 	public String list(Model model,Modules modules){
+		pageController.setPNPS(model, modules);
+		if (modules.getParentId() == 0) {
+			//查询总记录条数
+			int totalRecord = modulesService.findCount();
+			pageController.findPage(model, modules,totalRecord);
+		} else {
+			//条件查询总记录条数
+			int totalRecord = modulesService.findCountByT(modules);
+			pageController.findPageCondition(model, modules,totalRecord);
+			
+			model.addAttribute("jspurl","&parentId="+modules.getParentId());
+		}
+		
 		model.addAttribute("allmodules",modulesService.findCondition(modules));
 		this.setModel(model);
 		return "forum/modules/list";

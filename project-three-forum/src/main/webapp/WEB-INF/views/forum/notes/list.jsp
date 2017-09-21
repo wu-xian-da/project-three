@@ -30,7 +30,12 @@
 		</td>
 		<td align="center">${man.status.name}</td>
 		<td align="center"><fmt:formatDate value="${man.releasetime}" pattern="yyyy-MM-dd HH:mm" type="date"/></td>
-		<td align="center"><a href="${pageContext.request.contextPath}/forum/notes/update/${man.id}">编辑</a>|<a href="">删除</a></td>
+		<td align="center">
+		<a href="${pageContext.request.contextPath}/forum/notes/update/${man.id}">编辑</a> |
+		<a href="${pageContext.request.contextPath}/forum/notes/delete/${man.id}" class="deletenotes">删除</a>
+		<input type="hidden" value="${man.theme}">|
+		<a href="${pageContext.request.contextPath}/forum/notes/selectnotes/${man.id}">预览</a>
+		</td>
 		</tr>
 		</c:forEach>
 	</table>
@@ -72,6 +77,15 @@
 	$(function(){
 		$("#page_ps_select").change(function(){
 			window.location.href = '${pageContext.request.contextPath}/forum/notes/${membersId}?ps='+$(this).val();
+		});
+		
+		$(".deletenotes").click(function(){
+			var name =  $(this).next(":hidden").val();
+			var flag = confirm("确定删除文章-"+name);
+			if (flag) {
+				return true;
+			}
+			return false;
 		});
 	});
 </script>

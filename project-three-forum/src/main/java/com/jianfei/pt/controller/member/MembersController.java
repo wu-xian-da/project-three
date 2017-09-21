@@ -32,6 +32,12 @@ public class MembersController {
 	@Autowired
 	private NotesService notesService;
 	
+	/***
+	 * 跳转用户编辑页面
+	 * @param id
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value="/update/{id}",method=RequestMethod.GET)
 	public String Formupdate(@PathVariable("id")int id,Model model){
 		model.addAttribute("gender",Gender.values());
@@ -39,6 +45,12 @@ public class MembersController {
 		return "member/members/form";
 	}
 
+	/***
+	 * 用户编辑提交表单
+	 * @param model
+	 * @param members
+	 * @return
+	 */
 	@RequestMapping(value="/update/{id}",method=RequestMethod.POST)
 	public String update (Model model,Members members){
 		membersService.update(members);
@@ -46,16 +58,28 @@ public class MembersController {
 		return "member/members/list";
 	}
 	
+	/****
+	 * 用户信息页面
+	 * @param id
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
 	public String findMembers(@PathVariable("id")int id,Model model){
 		model.addAttribute("memberslist",membersService.findById(id));
 		return "member/members/list";
 	}
 	
+	/**
+	 * 用户展示页面
+	 * @param model
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping
 	public String list(Model model,HttpServletRequest request){
 		List<Notes> notes = notesService.findNotesByMembersId(Integer.parseInt((String) request.getSession().getAttribute("membersId")));
 		request.getSession().setAttribute("notes", notes);
-		return "memfor/mem_main";
+		return "member/memfor/mem_main";
 	}
 }

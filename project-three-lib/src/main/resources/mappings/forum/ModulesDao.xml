@@ -14,6 +14,10 @@
 		where id = #{id}
 	</update>
 	
+	<delete id="delete">
+		delete from for_modules where id = #{id} 
+	</delete>
+	
 	<select id="findModulesByParentId"  resultType="com.jianfei.pt.entity.forum.Modules">
 		select * from for_modules where parent_id = #{parentId}
 	</select>
@@ -30,5 +34,17 @@
 		select * from for_modules m where 1 = 1
 		<if test="0 != parentId">and m.parent_id = #{parentId}</if>
 		limit #{pn},#{ps}
+	</select>
+	
+	<!-- 查询数据条数 -->
+	<select id="findCountByT" resultType="int">
+		select count(*) from for_modules m where 1 = 1
+		<if test="0 != parentId">and m.parent_id = #{parentId}</if>
+		order by m.id asc
+	</select>
+	
+	<!-- 查询数据条数 -->
+	<select id="findCount" resultType="int">
+		select count(*) from for_modules
 	</select>
 </mapper>
