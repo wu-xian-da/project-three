@@ -11,6 +11,7 @@ import lombok.ToString;
 
 import com.jianfei.pt.entity.base.BaseEntity;
 import com.jianfei.pt.entity.common.Gender;
+import com.jianfei.pt.entity.common.MemberStatus;
 
 @Getter
 @Setter
@@ -33,4 +34,5 @@ public class Members extends BaseEntity{
 	
 	private String birthday;//出生日期
 	
+	private MemberStatus status;
 }

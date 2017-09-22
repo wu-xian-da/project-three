@@ -5,7 +5,10 @@
   */
 package com.jianfei.pt.controller;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -110,13 +113,17 @@ public class LogRegController {
 	 * @param account
 	 * @param password
 	 * @return
+	 * @throws IOException 
 	 */
 	@RequestMapping(value="/Log",method=RequestMethod.POST)
-	public String Log(Model model,HttpServletRequest request,String account,String password){
+	public String Log(Model model,HttpServletRequest request,String account,String password,HttpServletResponse response) throws IOException{
 		Members members = membersService.findMembersByAccount(account, password);
-
-		request.getSession().setAttribute("membersId", String.valueOf(members.getId()));
-		request.getSession().setAttribute("members", members);
-		return "redirect:/member/members";
+		if (members != null) {
+			request.getSession().setAttribute("membersId", String.valueOf(members.getId()));
+			request.getSession().setAttribute("members", members);
+			return "redirect:/member/members";
+		}
+		//response.sendRedirect("http://localhost:8888/log?error=fail");
+		return "redirect:/log";
 	}
 }

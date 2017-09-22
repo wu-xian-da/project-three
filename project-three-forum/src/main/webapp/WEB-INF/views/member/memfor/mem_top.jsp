@@ -32,8 +32,8 @@
 		<tr>
 		<td><a href="${pageContext.request.contextPath}/forum/notes/${members.id}" target="mainFramemember">我的帖子</a></td>
 		<td><a href="${pageContext.request.contextPath}/member/members/${members.id}" target="mainFramemember">我的资料</a></td>
-		<td><a href="#" target="mainFramemember">我的评论</a></td>
-		<td><a href="#" target="mainFramemember">我的动态</a></td>
+		<!-- <td><a href="#" target="mainFramemember">我的评论</a></td>
+		<td><a href="#" target="mainFramemember">我的动态</a></td> -->
 		<td><a href="${pageContext.request.contextPath}/forum/notes/insert" target="mainFramemember">发帖</a></td>
 		</tr>
 	</table>

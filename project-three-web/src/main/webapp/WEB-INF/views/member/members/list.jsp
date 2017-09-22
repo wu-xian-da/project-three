@@ -24,6 +24,7 @@
 		<tr align="center">
 			<td width="50px">序号</td>
 			<td>账号</td>
+			<td>状态</td>
 			<td>姓名</td>
 			<td>邮箱</td>
 			<td width="40px">性别</td>
@@ -36,13 +37,21 @@
 			<tr align="center">
 			<td>${m.id}</td>
 			<td>${m.account}</td>
+			<td>${m.status.name}</td>
 			<td>${m.username}</td>
 			<td>${m.email}</td>
 			<td>${m.gender.name}</td>
 			<td>${m.age}</td>
 			<td>${m.birthday}</td>
 			<td>${m.address}</td>
-			<td><a href="#">启用</a>|<a href="#">禁用</a></td>
+			<td>
+				<c:if test="${m.status eq 'JY'}">
+				<a href="${pageContext.request.contextPath}/member/members/changestatusQY/${m.id}">启用</a>
+				</c:if>
+				<c:if test="${m.status eq 'QY'}">
+				<a href="${pageContext.request.contextPath}/member/members/changestatusJY/${m.id}">禁用</a>
+				</c:if>
+			</td>
 		</tr>
 		</c:forEach>
 	</table>

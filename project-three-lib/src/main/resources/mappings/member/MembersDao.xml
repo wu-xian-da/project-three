@@ -12,7 +12,8 @@
 		gender = #{gender},
 		age = #{age},
 		birthday = #{birthday},
-		address = #{address}
+		address = #{address},
+		status = #{status}
 		where id = #{id}
 	</update>
 	
@@ -21,7 +22,7 @@
 	</select>
 	
 	<select id="findMembersByAccount" resultType="com.jianfei.pt.entity.member.Members">
-		select * from mem_members where account = #{0} and password = #{1}
+		select * from mem_members where account = #{0} and password = #{1} and status = 0
 	</select>
 	
 	<select id="findAll" resultType="com.jianfei.pt.entity.member.Members">

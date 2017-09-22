@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.jianfei.pt.entity.common.Gender;
+import com.jianfei.pt.entity.common.MemberStatus;
 import com.jianfei.pt.entity.forum.Notes;
 import com.jianfei.pt.entity.member.Members;
 import com.jianfei.pt.service.forum.NotesService;
@@ -53,6 +54,7 @@ public class MembersController {
 	 */
 	@RequestMapping(value="/update/{id}",method=RequestMethod.POST)
 	public String update (Model model,Members members){
+		members.setStatus(MemberStatus.QY);
 		membersService.update(members);
 		model.addAttribute("memberslist",membersService.findById(members.getId()));
 		return "member/members/list";

@@ -6,6 +6,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>登录注册</title>
+<script type="text/javascript">
+	var errori ='<%=request.getParameter("error")%>'
+	if(errori=='fail'){
+		alert("账号不存在或被禁用");
+	}
+</script>
 </head>
 <body>
 	<table height="200px"></table>

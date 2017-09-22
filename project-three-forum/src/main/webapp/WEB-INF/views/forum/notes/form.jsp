@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>新增|编辑</title>
 <style type="text/css">
-	#ueditor{height: 250px;}
+	#ueditor{width: 1200px;}
 </style>
 </head>
 <body>
@@ -16,7 +16,7 @@
 	<input type="hidden" name="id" value="${forumnotes.id }">
 	<table border="1">
 		<tr>
-			<td width= "100px;">文章标题：</td><td width= "550px;"><input type="text" name="theme" value="${forumnotes.theme}"></td>
+			<td width= "100px;">文章标题：</td><td width= "550px;"><input type="text" name="theme" value="${forumnotes.theme}" style="width: 500px;height: 20px"></td>
 			<td width= "100px;">归属模块：</td>
 			<td width= "550px;">
 				<select name="parentmodules" id="parentmodules" style="width: 85px;height: 27px">
@@ -38,15 +38,15 @@
 			</td>
 		</tr>
 		<tr>
-			<td width= "100px;" valign="top">文章内容：</td>
-			<td colspan="3" width= "1200px;" height="360px" valign="top">
-				<textarea id="ueditor" name="content" >${forumnotes.content}</textarea>
+			<td width= "100px;">文章内容：</td>
+			<td colspan="3" width= "1200px;">
+				<textarea id="ueditor" name="content">${forumnotes.content}</textarea>
 				<input type="hidden" name="membersId" value="${membersId}">
 			</td>
 		</tr>
 		<tr>
 			<td><button type="submit">${empty forumnotes.id ? "新增" : "编辑"}</button></td>
-			<td><button type="button" onclick="javascript:history.back();">返回</button></td>
+			<td colspan="3"><button type="button" onclick="javascript:history.back();">返回</button></td>
 		</tr>
 	</table>
 	</form>
@@ -56,7 +56,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/ueditor/zh-cn.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-2.0.0.js"></script>
 <script type="text/javascript">
-    UE.getEditor('ueditor');
+    UE.getEditor('ueditor',{ initialFrameWidth: null });
 </script>
 <script language="javascript">
 	$(function(){

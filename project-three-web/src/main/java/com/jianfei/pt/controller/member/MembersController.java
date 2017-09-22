@@ -8,12 +8,14 @@ package com.jianfei.pt.controller.member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.jianfei.pt.common.PageController;
 import com.jianfei.pt.common.TMBSelect;
+import com.jianfei.pt.entity.common.MemberStatus;
 import com.jianfei.pt.entity.member.Members;
-import com.jianfei.pt.entity.system.Users;
 import com.jianfei.pt.service.member.MembersService;
 
 @Controller
@@ -30,7 +32,31 @@ public class MembersController {
 	private TMBSelect tmbSelect;
 	
 	public void setModel(Model model){
-		
+		model.addAttribute("status",MemberStatus.values());
+	}
+	
+	/**
+	 * 启用
+	 * @return
+	 */
+	@RequestMapping(value="/changestatusQY/{id}",method=RequestMethod.GET)
+	public String changestatusQY(@PathVariable("id")int id){
+		Members member = membersService.findById(id);
+		member.setStatus(MemberStatus.QY);
+		membersService.update(member);
+		return "redirect:/member/members";
+	}
+	
+	/***
+	 * 禁用
+	 * @return
+	 */
+	@RequestMapping(value="/changestatusJY/{id}",method=RequestMethod.GET)
+	public String changestatusJY(@PathVariable("id")int id){
+		Members member = membersService.findById(id);
+		member.setStatus(MemberStatus.JY);
+		membersService.update(member);
+		return "redirect:/member/members";
 	}
 	
 	@RequestMapping
@@ -51,6 +77,7 @@ public class MembersController {
 			model.addAttribute("jspurl","&account="+members.getAccount()+"&username="+members.getUsername());
 		}
 		model.addAttribute("allmembers",membersService.findCondition(members));
+		this.setModel(model);
 		return "member/members/list";
 	}
 }
